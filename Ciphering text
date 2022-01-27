@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+int main(int argc, string argv[])
+{
+    //check the command line.
+    if (argc != 2)
+    {
+        printf("Usage: ./caesar key\n");
+        return 1;
+    }
+    //check comand line type.
+    for (int i = 0, n = strlen(argv[1]); i < n; i++)
+    {
+        if (isdigit(argv[1][i]) == false)
+        {
+            printf("Usage: ./caesar key\n");
+            return 1;
+        }
+    }
+    //change string type argv to integer.
+    int key = atoi(argv[1]) % 26;
+    string text = get_string("plain text: ");
+    printf("ciphertext: ");
+
+    //cipher the text.
+    for (int i = 0, len = strlen(text); i < len; i++)
+    {
+        //ignore non alphabetic elements.
+        if (isalpha(text[i]) == false)
+        {
+            printf("%c", text[i]);
+            continue; // return to for loop
+        }
+        //wrape around alphabet.
+        int ascii = isupper(text[i]) ? 65 : 97;
+
+        int pi = text[i] - ascii;
+        int ci = (pi + key) % 26;
+        printf("%c", ci + ascii);
+    }
+    printf("\n");
+}
